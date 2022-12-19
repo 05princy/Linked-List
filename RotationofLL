@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *add;
+};
+struct node *p,*q=NULL;
+int size=0;
+void add_node(int data){
+	struct node *new_node=(struct node *)malloc(sizeof(struct node));
+	new_node->data=data;
+	new_node->add=NULL;
+	
+	if(p==NULL){
+		p=new_node;
+		q=new_node;
+	}
+	else{
+		q->add=new_node;
+		q=new_node;
+	}
+	size++;
+}
+struct node* rotate_kth(int k){
+	if(p==NULL || k==0){
+		return p;
+	}
+	struct node* temp=p;
+	int n=0;
+	while(temp->add){
+		temp=temp->add;
+		n++;
+	}
+	temp->add=p;
+	k=k%(n+1);
+	int jump=n-k;
+        temp=p;
+        while(jump)
+        {
+            temp=temp->add;
+            jump--;
+        }
+        struct node* returnp=temp->add;
+        temp->add=NULL;
+        printf("After Rotation nodes are:\n");
+        struct node* ptr=returnp;
+        while(ptr!=NULL)
+        {
+        	printf("%d ",ptr->data);
+        	ptr=ptr->add;
+		}
+    }
+void display()
+{
+	struct node*current=p;
+	if(p==NULL){
+	printf("empty");
+	return;
+    }
+   printf("nodes are");
+   while(current!=NULL)
+   {
+   	printf("%d ",current->data);
+   	current=current->add;
+   }
+   printf("\n");
+}
+int main()
+{
+	add_node(10);
+	add_node(20);
+	add_node(30);
+	add_node(40);
+	add_node(50);
+	add_node(60);
+	display();
+	rotate_kth(3);
+
+}
