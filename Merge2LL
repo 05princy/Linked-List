@@ -1,0 +1,86 @@
+//merging two sorted list
+#include<stdio.h>
+#include<malloc.h>
+typedef struct node{
+	int data;
+	struct node *next;
+}NODE;
+
+NODE *getNode()
+{
+	NODE *temp;
+	temp=(struct node *)malloc(sizeof(struct node));
+	printf("Enter any number:");
+	scanf("%d",&temp->data);
+	temp->next=NULL;
+	return temp;
+}
+NODE *create(){
+	NODE *temp,*ptr,*start=NULL;
+	int no,i;
+	printf("How many Nodes?");
+	scanf("%d",&no);
+	for (i=0;i<no;i++){
+		temp=getNode();
+		if(start==NULL){
+			start=ptr=temp;
+		}else{
+			ptr->next=temp;
+			ptr=temp;
+		}
+		}
+		return start;
+	}
+void display(NODE *start){
+	NODE *ptr;
+	for(ptr=start;ptr!=NULL;ptr=ptr->next){
+		printf("%d->",ptr->data);
+	}
+	printf("NULL");
+}
+NODE *merge(NODE *L1,NODE *L2)
+{
+	NODE *L,*P;
+	if(L1==NULL){
+		return L2;
+	}
+	if(L2==NULL){
+		return L1;
+	}
+	if(L1->data<L2->data){
+		L=P=L1;
+		L1=L1->next;
+}
+else{
+	L=P=L2;
+	L2=L2->next;
+	}
+while(L1!=NULL && L2!=NULL){
+	if(L1->data<L2->data){
+		P->next=L1;
+		L1=L1->next;
+		P=P->next;
+	}
+	else{
+		P->next=L2;
+		L2=L2->next;
+		P=P->next;
+	}
+}
+if(L1!=NULL){
+	P->next=L1;
+}
+else{
+	P->next=L2;
+}
+return L;
+}
+main(){
+	NODE *s1,*s2,*s3;
+	s1=create();
+	s2=create();
+	display(s1);
+	display(s2);
+	s3=merge(s1,s2);
+	display(s3);
+	}
